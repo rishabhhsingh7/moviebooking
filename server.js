@@ -30,7 +30,6 @@ db.mongoose
     process.exit();
   });
 
-
 // Default route for the index or root path
 app.get("/", (req, res) => {
   res.json({
@@ -38,6 +37,9 @@ app.get("/", (req, res) => {
   });
 });
 
+require("./app/routes/artist.routes")(app);
+require("./app/routes/genre.routes")(app);
+require("./app/routes/movie.routes")(app);
 
 app.listen(port, () => console.log("App listening on port: " + port));
 module.exports = app;
