@@ -16,4 +16,4 @@ module.exports = (app) => {
   
     app.use("/api", router);
     //Add auth as Middleware in above line
-  };
+  }
