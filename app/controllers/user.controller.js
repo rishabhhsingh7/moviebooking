@@ -127,3 +127,55 @@ exports.logout = (req, res) => {
       });
     });
 };
+
+exports.coupons = (req, res) => {
+  // Validate request
+  if (!req.body.id) {
+    res.status(400).send({ message: "Please provide User Id." });
+    return;
+  }
+
+  const id = req.body.id;
+  User.findById(id)
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: "Some error occurred, please try again later.",
+        });
+      } else res.send({ message: "Found Coupon Codes.", data: data.coupens });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating.",
+      });
+    });
+};
+
+exports.bookShow = (app) => {
+  if (!req.body.id) {
+    res.status(400).send({ message: "Please provide User Id." });
+    return;
+  }
+
+  const id = req.body.id;
+  const booking = {
+    reference_number: req.body.reference_number,
+    coupon_code: req.body.coupon_code,
+    show_id: req.body.show_id,
+    tickets: req.body.tickets,
+  };
+
+  User.findByIdAndUpdate(id, { $push: { bookingRequests: booking } })
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: "Some error occurred, please try Booking again later.",
+        });
+      } else res.send({ message: "Booked Tickets Successfully." });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating.",
+      });
+    });
+};
